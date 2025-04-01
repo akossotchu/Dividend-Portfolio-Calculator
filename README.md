@@ -118,7 +118,7 @@ Create a standalone executable:
 
 ```
 pip install pyinstaller
-pyinstaller --name="Dividend_Portfolio_Calculator" --windowed --icon=icon.ico --add-data="app.py;." app.py
+pyinstaller --name="Dividend Calculator" --windowed --onefile --icon=icon.ico app.py
 ```
 
 ### Project Structure
@@ -182,4 +182,4 @@ Dividend calculator, dividend portfolio planner, dividend growth calculator, com
 
 ---
 
-[View all features and documentation on GitHub](https://github.com/yourusername/dividend-portfolio-calculator)
+[View all features and documentation on GitHub](https://github.com/akossotchu/Dividend-Portfolio-Calculator)

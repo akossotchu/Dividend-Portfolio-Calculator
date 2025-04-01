@@ -50,7 +50,7 @@ See the [requirements.txt](requirements.txt) file for all dependencies.
 
 1. Clone the repository
    ```
-   git clone https://github.com/yourusername/dividend-portfolio-calculator.git
+   git clone https://github.com/akossotchu/Dividend-Portfolio-Calculator.git
    ```
 2. Install requirements
    ```

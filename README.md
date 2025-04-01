@@ -13,7 +13,7 @@
 
 Dividend Portfolio Calculator is a powerful Python desktop application that helps investors plan and visualize their dividend investment strategies. The application offers portfolio growth projections, dividend income forecasting, yield on cost analysis, and detailed visualizations to support long-term investment planning.
 
-![Dividend Portfolio Calculator Screenshot](https://via.placeholder.com/800x450.png?text=Dividend+Portfolio+Calculator+Screenshot)
+![Dividend Portfolio Calculator Screenshot](https://raw.githubusercontent.com/akossotchu/Dividend-Portfolio-Calculator/refs/heads/main/main.png)
 
 ### Why Dividend Portfolio Calculator?
 
@@ -64,16 +64,16 @@ See the [requirements.txt](requirements.txt) file for all dependencies.
 ## 📱 Screenshots and Features
 
 ### Portfolio Balance Growth
-![Portfolio Balance Growth](https://via.placeholder.com/600x400.png?text=Portfolio+Balance+Growth)
+![Portfolio Balance Growth](https://raw.githubusercontent.com/akossotchu/Dividend-Portfolio-Calculator/refs/heads/main/portfolio.png)
 
 ### Dividend Income Projection
-![Dividend Income Projection](https://via.placeholder.com/600x400.png?text=Dividend+Income+Projection)
+![Dividend Income Projection](https://raw.githubusercontent.com/akossotchu/Dividend-Portfolio-Calculator/refs/heads/main/dividend.png)
 
 ### Yield on Cost Analysis
-![Yield on Cost Analysis](https://via.placeholder.com/600x400.png?text=Yield+on+Cost+Analysis)
+![Yield on Cost Analysis](https://raw.githubusercontent.com/akossotchu/Dividend-Portfolio-Calculator/refs/heads/main/yoc.png)
 
 ### Results Table View
-![Results Table](https://via.placeholder.com/600x400.png?text=Results+Table+View)
+![Results Table](https://raw.githubusercontent.com/akossotchu/Dividend-Portfolio-Calculator/refs/heads/main/table.png)
 
 ## 🔧 Technical Details
 

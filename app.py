@@ -729,8 +729,8 @@ class DividendPortfolioCalculator(QMainWindow):
         )
         
         fig.add_annotation(
-            x=0.02,
-            y=0.02,
+            x=0.15,
+            y=1.00,
             xref="paper",
             yref="paper",
             text=annotation_text,
@@ -808,8 +808,8 @@ class DividendPortfolioCalculator(QMainWindow):
         )
         
         fig.add_annotation(
-            x=0.02,
-            y=0.98,
+            x=0.12,
+            y=1.00,
             xref="paper",
             yref="paper",
             text=annotation_text,
@@ -890,8 +890,8 @@ class DividendPortfolioCalculator(QMainWindow):
         )
         
         fig.add_annotation(
-            x=0.02,
-            y=0.98,
+            x=0.12,
+            y=1.00,
             xref="paper",
             yref="paper",
             text=annotation_text,

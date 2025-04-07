@@ -9,9 +9,9 @@ import qrcode
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                             QLabel, QPushButton, QComboBox, QCheckBox, QGroupBox, 
                             QGridLayout, QDoubleSpinBox, QSpinBox, QTabWidget, QSplitter,
-							QMessageBox, QDialog, QFrame)
+							QMessageBox, QDialog, QFrame, QToolBar, QSizePolicy)
 from PyQt5.QtGui import QPixmap, QImage, QPainter, QColor, QPen, QBrush, QPainterPath, QFont
-from PyQt5.QtCore import QLocale, Qt, QRect
+from PyQt5.QtCore import QLocale, Qt, QRect, QSize
 import plotly.graph_objects as go
 import plotly.io as pio
 
@@ -34,6 +34,93 @@ class DividendPortfolioCalculator(QMainWindow):
         self.setWindowTitle("Dividend Portfolio Calculator")
         self.setGeometry(100, 100, 800, 400)
         self.setStyleSheet(f"background-color: {COLORS['background']}; color: {COLORS['text']};")
+        
+        # Remover barra de título padrão
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        
+        # Create modern toolbar para agir como barra de título personalizada
+        toolbar = QToolBar("Main Toolbar")
+        toolbar.setIconSize(QSize(18, 18))
+        toolbar.setMovable(False)
+        
+        # Remover margens e bordas da toolbar
+        toolbar.setContentsMargins(0, 0, 0, 0)
+        toolbar.setStyleSheet(f"""
+            QToolBar {{
+                background-color: {COLORS['accent']};
+                border: none;
+                spacing: 0px;
+                padding: 0px;
+                margin: 0px;
+            }}
+        """)
+        
+        self.addToolBar(toolbar)
+        
+        # Criar título e botões de controle em um widget
+        title_widget = QWidget()
+        title_layout = QHBoxLayout(title_widget)
+        title_layout.setContentsMargins(10, 0, 10, 0)
+        title_layout.setSpacing(0)
+        title_widget.setStyleSheet(f"background-color: {COLORS['accent']}; margin: 0px; padding: 0px; border: none;")
+        
+        # Título da aplicação
+        title_label = QLabel("Dividend Portfolio Calculator")
+        title_label.setStyleSheet(f"""
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: transparent;
+            margin: 0px;
+            padding: 8px;
+        """)
+        
+        # Adicionar botões de controle
+        btn_minimize = QPushButton("−")
+        btn_maximize = QPushButton("⧠")
+        btn_close = QPushButton("×")
+        
+        # Estilizar botões
+        control_btn_style = """
+            QPushButton {
+                background-color: transparent;
+                color: white;
+                border: none;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 4px 8px;
+                margin: 0px;
+            }
+            QPushButton:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        """
+        
+        btn_minimize.setStyleSheet(control_btn_style)
+        btn_maximize.setStyleSheet(control_btn_style)
+        btn_close.setStyleSheet(control_btn_style + "QPushButton:hover { background-color: rgba(255, 0, 0, 0.6); }")
+        
+        # Conectar botões às ações da janela
+        btn_minimize.clicked.connect(self.showMinimized)
+        btn_maximize.clicked.connect(self.toggle_maximize)
+        btn_close.clicked.connect(self.close)
+        
+        # Adicionar widgets ao layout do título
+        title_layout.addWidget(title_label)
+        title_layout.addStretch()
+        title_layout.addWidget(btn_minimize)
+        title_layout.addWidget(btn_maximize)
+        title_layout.addWidget(btn_close)
+        
+        # Adicionar widget de título à toolbar, garantindo que ocupe todo o espaço
+        toolbar.addWidget(title_widget)
+        title_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
+        # Permitir arrastar a janela a partir da toolbar
+        title_widget.mousePressEvent = self.mousePressEvent
+        title_widget.mouseMoveEvent = self.mouseMoveEvent
+        title_label.mousePressEvent = self.mousePressEvent
+        title_label.mouseMoveEvent = self.mouseMoveEvent
         
         # Criar pasta para salvar os gráficos (na área de trabalho ou no diretório atual)
         self.desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
@@ -317,7 +404,7 @@ class DividendPortfolioCalculator(QMainWindow):
         self.results_table_button.setStyleSheet(button_style)
         self.results_table_button.clicked.connect(self.view_results_table)
         results_layout.addWidget(self.results_table_button)
-		
+        
         # Adicionar linha divisória
         results_layout.addSpacing(15)
         divider = QFrame()
@@ -348,8 +435,8 @@ class DividendPortfolioCalculator(QMainWindow):
         """)
         self.donate_button.clicked.connect(self.show_donate_dialog)
         results_layout.addWidget(self.donate_button)
-		
-		# Adicionar widgets ao layout principal
+        
+        # Adicionar widgets ao layout principal
         splitter = QSplitter(Qt.Horizontal)
         left_widget = QWidget()
         left_widget.setLayout(QVBoxLayout())
@@ -365,9 +452,28 @@ class DividendPortfolioCalculator(QMainWindow):
         
         main_layout.addWidget(splitter)
         
+        # Variáveis para arrastar a janela
+        self.drag_position = None
+        
         # Calcular e plotar com valores padrão
         self.calculate_and_plot()
     
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.drag_position = event.globalPos() - self.frameGeometry().topLeft()
+            event.accept()
+    
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton and self.drag_position is not None:
+            self.move(event.globalPos() - self.drag_position)
+            event.accept()
+    
+    def toggle_maximize(self):
+        if self.isMaximized():
+            self.showNormal()
+        else:
+            self.showMaximized()
+	
     def get_input_style(self):
         return f"""
             QDoubleSpinBox, QSpinBox, QComboBox {{
